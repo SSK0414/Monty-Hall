@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monty Hall Problem Simulation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Monty Hall Problem Simulation</h1>
+<p>Choose a door:</p>
+
+<button onclick="chooseDoor(1)">Door 1</button>
+<button onclick="chooseDoor(2)">Door 2</button>
+<button onclick="chooseDoor(3)">Door 3</button>
+
+<p id="result"></p>
+
+<script>
+  let correctDoor = Math.floor(Math.random() * 3) + 1;
+  let chosenDoor;
+
+  function chooseDoor(doorNumber) {
+    chosenDoor = doorNumber;
+    revealGoat();
+  }
+
+  function revealGoat() {
+    let doorsToReveal = [1, 2, 3].filter(door => door !== correctDoor && door !== chosenDoor);
+    let doorRevealed = doorsToReveal[Math.floor(Math.random() * doorsToReveal.length)];
+
+    document.getElementById('result').innerHTML = `Behind Door ${doorRevealed}, there is a goat.`;
+    
+    offerSwitch();
+  }
+
+  function offerSwitch() {
+    document.getElementById('result').innerHTML += `<p>Do you want to switch your choice?</p>`;
+    document.getElementById('result').innerHTML += `<button onclick="finalResult('stay')">Stay with your choice</button>`;
+    document.getElementById('result').innerHTML += `<button onclick="finalResult('switch')">Switch your choice</button>`;
+  }
+
+  function finalResult(choice) {
+    if (choice === 'stay') {
+      if (chosenDoor === correctDoor) {
+        document.getElementById('result').innerHTML = 'Congratulations! You won!';
+      } else {
+        document.getElementById('result').innerHTML = 'Sorry, you lost. The correct door was Door ' + correctDoor;
+      }
+    } else if (choice === 'switch') {
+      let remainingDoor = [1, 2, 3].filter(door => door !== chosenDoor && door !== correctDoor)[0];
+
+      if (remainingDoor === correctDoor) {
+        document.getElementById('result').innerHTML = 'Congratulations! You won!';
+      } else {
+        document.getElementById('result').innerHTML = 'Sorry, you lost. The correct door was Door ' + correctDoor;
+      }
+    }
+  }
+</script>
+
+</body>
+</html>

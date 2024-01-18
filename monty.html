@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monty Hall Problem Simulation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Monty Hall Problem Simulation</h1>
+<button onclick="runSimulation()">Run 100 Games</button>
+<p id="winCount"></p>
+
+<script>
+  let winCount = 0;
+
+  function runSimulation() {
+    winCount = 0;
+
+    for (let i = 0; i < 100; i++) {
+      let correctDoor = Math.floor(Math.random() * 3) + 1;
+      let chosenDoor = Math.floor(Math.random() * 3) + 1;
+
+      let doorsToReveal = [1, 2, 3].filter(door => door !== correctDoor && door !== chosenDoor);
+      let doorRevealed = doorsToReveal[Math.floor(Math.random() * doorsToReveal.length)];
+
+      let remainingDoor = [1, 2, 3].filter(door => door !== chosenDoor && door !== doorRevealed)[0];
+
+      if (remainingDoor === correctDoor) {
+        winCount++;
+      }
+    }
+
+    document.getElementById('winCount').innerHTML = `Switching led to a win in ${winCount} out of 100 games.`;
+  }
+</script>
+
+</body>
+</html>
